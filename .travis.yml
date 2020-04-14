@@ -33,7 +33,7 @@ install:
     if [[ $BUILD_LOCAL ]]; then
         PIP_ARGS=( --pip-arg={-r,../specs/macos/requirements.txt,./} );
     else
-        PIP_ARGS=( --pip-arg={-r,../specs/macos/requirements.txt,Orange3==$BUILD_COMMIT} );
+        PIP_ARGS=( --pip-arg={--no-dependencies, Orange3==$BUILD_COMMIT} );
     fi
   - |-
     ./scripts/macos/build-macos-app.sh "${PIP_ARGS[@]}" --python-version=3.6.8 "$APP"
@@ -53,14 +53,6 @@ script:
   - $APP/Contents/MacOS/python --version
   - $APP/Contents/MacOS/pip --version
   - $APP/Contents/MacOS/pip freeze
-
-  # Don't even ask
-  - export ORANGE_DEPRECATIONS_ERROR=1
-  - export PYTHONWARNINGS=module
-  - unset TRAVIS
-  - $APP/Contents/MacOS/python -Xfaulthandler -m unittest -v Orange.tests Orange.widgets.tests
-  - export TRAVIS=true
-
 
 after_success:
   - shasum -a 256 orange3/dist/Orange3-$VERSION.dmg
