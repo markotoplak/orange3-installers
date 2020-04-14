@@ -39,7 +39,7 @@ install:
     if [[ $BUILD_LOCAL ]]; then
         PIP_ARGS=( --pip-arg={-r,../specs/macos/requirements.txt,./} );
     else
-        PIP_ARGS=( --pip-arg={-r,../specs/macos/requirements.txt,Orange3==$BUILD_COMMIT} );
+        PIP_ARGS=( --pip-arg=Orange3==$BUILD_COMMIT );
     fi
   - |-
     ../scripts/macos/build-macos-app.sh "${PIP_ARGS[@]}" --python-version=$PYTHON_VERSION "$APP"
@@ -60,14 +60,6 @@ script:
   - $APP/Contents/MacOS/pip --version
   - $APP/Contents/MacOS/pip freeze
 
-  # Don't even ask
-  - export ORANGE_DEPRECATIONS_ERROR=1
-  - export PYTHONWARNINGS=module
-  - unset TRAVIS
-  - $APP/Contents/MacOS/python -Xfaulthandler -m unittest -v Orange.tests Orange.widgets.tests
-  - export TRAVIS=true
-
-
 after_success:
-  - shasum -a 256 orange3/dist/Orange3-*.dmg
-  - echo $(curl -fS --upload-file orange3/dist/Orange3-*.dmg https://transfer.sh/)
+  - shasum -a 256 orange3/dist/Orange3-$VERSION.dmg
+  - echo $(curl -fS -F"file=@orange3/dist/Orange3-$VERSION.dmg" https://file.io)

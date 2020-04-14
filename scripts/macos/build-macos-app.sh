@@ -130,7 +130,7 @@ chmod +x "${APPDIR}"/Contents/MacOS/pip
 
 PYTHON="${APPDIR}"/Contents/MacOS/python
 
-"${PYTHON}" -m pip install --no-warn-script-location "${PIP_REQ_ARGS[@]}"
+"${PYTHON}" -m pip install --no-dependencies --no-warn-script-location "${PIP_REQ_ARGS[@]}"
 
 VERSION=$("${PYTHON}" -m pip show orange3 | grep -E '^Version:' |
           cut -d " " -f 2)
@@ -138,14 +138,3 @@ VERSION=$("${PYTHON}" -m pip show orange3 | grep -E '^Version:' |
 m4 -D__VERSION__="${VERSION:?}" "${APPDIR}"/Contents/Info.plist.in \
     > "${APPDIR}"/Contents/Info.plist
 rm "${APPDIR}"/Contents/Info.plist.in
-
-# Sanity check
-(
-    # run from an empty dir to avoid importing/finding any packages on ./
-    tempdir=$(mktemp -d)
-    cleanup() { rm -r "${tempdir}"; }
-    trap cleanup EXIT
-    cd "${tempdir}"
-    "${PYTHON}" -m pip install --no-cache-dir --no-index orange3 PyQt5
-    "${PYTHON}" -m Orange.canvas --help > /dev/null
-)
