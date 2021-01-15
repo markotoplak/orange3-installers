@@ -49,7 +49,7 @@ cache:
   - '.cache -> appveyor.yml'
 
 build_script:
-  - git clone -q --depth 20 %REPO%
+  - git clone -q --depth 100 %REPO%
   - cd orange3
   - git fetch origin %BUILD_BRANCH%
   - git checkout %BUILD_COMMIT%
