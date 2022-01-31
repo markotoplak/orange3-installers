@@ -6,8 +6,8 @@ trigger:
       - testing/azure/*
 
 variables:
-  REPO: https://github.com/biolab/orange3.git
-  BUILD_BRANCH: master
+  REPO: https://github.com/markotoplak/orange3.git
+  BUILD_BRANCH: new-cgp
   BUILD_COMMIT: FETCH_HEAD
   BUILD_LOCAL: 1
 
