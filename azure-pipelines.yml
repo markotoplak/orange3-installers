@@ -4,6 +4,7 @@ trigger:
       - master
       - releases/*
       - testing/azure/*
+      - new-cgp
 
 variables:
   REPO: https://github.com/markotoplak/orange3.git
