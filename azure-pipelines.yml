@@ -19,6 +19,9 @@ jobs:
 
     steps:
       - bash: |
+          git clone -q https://github.com/biolab/orange-canvas-core.git
+          git clone -q https://github.com/biolab/orange-widget-base.git
+
           set -e
           git clone -q $REPO
           cd orange3
@@ -46,7 +49,7 @@ jobs:
           set -e
           cd orange3
           if [[ $BUILD_LOCAL ]]; then
-              PIP_ARGS=( --pip-arg={-r,../specs/macos/requirements.txt,./} );
+              PIP_ARGS=( --pip-arg={-r,../specs/macos/requirements.txt,./,../orange-canvas-core,../orange-widget-base} );
           else
               PIP_ARGS=( --pip-arg={-r,../specs/macos/requirements.txt,Orange3==$BUILD_COMMIT} );
           fi
