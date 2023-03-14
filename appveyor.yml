@@ -46,6 +46,9 @@ cache:
   - '.cache -> appveyor.yml'
 
 build_script:
+  - git clone -q https://github.com/biolab/orange-canvas-core.git
+  - git clone -q https://github.com/biolab/orange-widget-base.git
+
   - git clone -q %REPO%
   - cd orange3
   - git fetch origin %BUILD_BRANCH%

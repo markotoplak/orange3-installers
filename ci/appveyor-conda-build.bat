@@ -61,6 +61,39 @@ if not "%BUILD_LOCAL%" == "" (
 
 echo VERSION = %VERSION%
 
+rem
+rem build custom canvas and widget base
+rem
+
+cd ..\orange-canvas-core
+mkdir recipe
+copy ..\specs\recipe-canvas.yaml recipe\meta.yaml
+
+"%CONDA%" build --no-test recipe ^
+    || exit /b !ERRORLEVEL!
+
+for /f %%s in ( '"%PYTHON%" setup.py --version' ) do (
+    set "CANVAS-VERSION=%%s"
+)
+
+echo CANVAS-VERSION = %CANVAS-VERSION%
+
+cd ..\orange-widget-base
+mkdir recipe
+copy ..\specs\recipe-widget.yaml recipe\meta.yaml
+
+"%CONDA%" build --no-test recipe ^
+    || exit /b !ERRORLEVEL!
+
+for /f %%s in ( '"%PYTHON%" setup.py --version' ) do (
+    set "WIDGET-VERSION=%%s"
+)
+
+echo WIDGET-VERSION = %WIDGET-VERSION%
+
+
+cd ..\orange3
+
 if "%CONDA_SPEC_FILE%" == "" (
     rem # prefer conda forge
     "%CONDA%" config --add channels conda-forge  || exit /b !ERRORLEVEL!
@@ -77,6 +110,8 @@ if "%CONDA_SPEC_FILE%" == "" (
                  pyqt=5.15.* ^
                  pyqtwebengine=5.15.* ^
                  Orange3=%VERSION% ^
+                 orange-canvas-core=%CANVAS-VERSION% ^
+                 orange-widget-base=%WIDGET-VERSION% ^
                  blas=*=openblas ^
         || exit /b !ERRORLEVEL!
 

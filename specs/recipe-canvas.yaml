@@ -1,0 +1,65 @@
+{% set name = "orange-canvas-core" %}
+{% set version = "0.1.29" %}
+
+{% set data = load_setup_py_data() %}
+{% set version = data['version'] %}
+
+source:
+  git_url: ../
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+build:
+  noarch: python
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - python >=3.6
+    - pip
+  run:
+    - python >=3.6
+    - pip    >=18.0
+    - setuptools
+    - anyqt >=0.1.0
+    - pyqt
+    - docutils
+    - commonmark >=0.8.1
+    - requests
+    - cachecontrol >=0.12.6
+    # via cachecontrol[filecache]
+    - lockfile >=0.9
+    - dictdiffer
+    - qasync
+    - importlib_metadata
+
+test:
+  imports:
+    - orangecanvas.main
+    - orangecanvas.application.canvasmain
+
+about:
+  home: https://github.com/biolab/orange-canvas-core
+  license: GPL-3.0-only
+  license_family: GPL
+  license_file: LICENSE.txt
+  summary: Core component of Orange Canvas
+
+  description: |
+    Orange Canvas Core is is a framework for building graphical user
+    interfaces for editing workflows. It is a component used to build
+    the Orange Canvas (http://orange.biolab.si) data-mining application
+    (for which it was developed in the first place).
+
+  doc_url: https://orange-canvas-core.readthedocs.io/
+  dev_url: https://github.com/biolab/orange-canvas-core
+
+extra:
+  recipe-maintainers:
+    - ales-erjavec
+    - lanzagar
+    - markotoplak
+    - primozgodec
