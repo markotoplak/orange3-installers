@@ -21,6 +21,7 @@ jobs:
       - bash: |
           git clone -q https://github.com/biolab/orange-canvas-core.git
           git clone -q https://github.com/biolab/orange-widget-base.git
+          git clone -q https://github.com/biolab/orange-translations.git
 
           set -e
           git clone -q $REPO
@@ -44,6 +45,16 @@ jobs:
           make install
           cd ..
         displayName: 'Install modified create-dmg (modified to allow longer detach timeouts)'
+
+      - bash: |
+          pip install trubar
+          cp -r orange3 orange3-orig
+          cp -r orange-canvas-core orange-canvas-core-orig
+          cp -r orange-widget-base orange-widget-base-orig
+          trubar translate -s orange-canvas-core-orig/orangecanvas -d orange-canvas-core/orangecanvas --static orange-translations/si/orange-canvas-static orange-translations/si/orange-canvas-core.yaml
+          trubar translate -s orange-widget-base-orig/orangewidget -d orange-widget-base/orangewidget orange-translations/si/orange-widget-base.yaml
+          trubar translate -s orange3-orig/Orange -d orange3/Orange orange-translations/si/orange3.jaml
+        displayName: 'Apply translations (trubar)'
 
       - bash: |
           set -e
