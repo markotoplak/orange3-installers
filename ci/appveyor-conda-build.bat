@@ -18,6 +18,25 @@ if exist "%CONDA%\..\activate" (
     call "%CONDA%\..\activate"
 )
 
+rem
+rem call trubar
+rem
+
+cd ..
+
+pip install trubar
+
+xcopy orange3 orange3-orig\ /s
+xcopy orange-canvas-core orange-canvas-core-orig\ /s
+xcopy orange-widget-base orange-widget-base-orig\ /s
+trubar translate -s orange-canvas-core-orig/orangecanvas -d orange-canvas-core/orangecanvas --static orange-translations/si/orange-canvas-static orange-translations/si/orange-canvas-core.yaml
+trubar translate -s orange-widget-base-orig/orangewidget -d orange-widget-base/orangewidget orange-translations/si/orange-widget-base.yaml
+trubar translate -s orange3-orig/Orange -d orange3/Orange orange-translations/si/orange3.jaml
+
+cd orange3
+
+
+
 "%CONDA%" config --append channels conda-forge  || exit /b !ERRORLEVEL!
 
 if not "%CONDA_USE_ONLY_TAR_BZ2%" == "" (
