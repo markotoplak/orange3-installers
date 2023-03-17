@@ -50,6 +50,8 @@ build_script:
   - git clone -q https://github.com/biolab/orange-widget-base.git
   - git clone -q https://github.com/biolab/orange-translations.git
 
+  - git clone -q https://github.com/biolab/orange3-geo.git
+
   - git clone -q %REPO%
   - cd orange3
   - git fetch origin %BUILD_BRANCH%

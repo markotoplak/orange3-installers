@@ -25,18 +25,20 @@ rem
 cd ..
 
 pip install trubar
+set PYTHONUTF8=1
 
 xcopy orange3 orange3-orig\ /s
 xcopy orange-canvas-core orange-canvas-core-orig\ /s
 xcopy orange-widget-base orange-widget-base-orig\ /s
-set PYTHONUTF8=1
 trubar translate -s orange-canvas-core-orig/orangecanvas -d orange-canvas-core/orangecanvas --static orange-translations/si/orange-canvas-static orange-translations/si/orange-canvas-core.yaml
 trubar translate -s orange-widget-base-orig/orangewidget -d orange-widget-base/orangewidget orange-translations/si/orange-widget-base.yaml
 trubar translate -s orange3-orig/Orange -d orange3/Orange orange-translations/si/orange3.jaml
 
+xcopy orange3-geo orange3-geo-orig\ /s
+trubar translate -s orange3-geo-orig/orangecontrib/geo -d orange3-geo/orangecontrib/geo orange-translations/si/orange3-geo.jaml
+
+
 cd orange3
-
-
 
 "%CONDA%" config --append channels conda-forge  || exit /b !ERRORLEVEL!
 
@@ -112,6 +114,21 @@ for /f %%s in ( '"%PYTHON%" setup.py --version' ) do (
 echo WIDGET-VERSION = %WIDGET-VERSION%
 
 
+cd ..\orange3-geo
+mkdir recipe
+copy ..\specs\recipe-geo.yaml recipe\meta.yaml
+
+"%CONDA%" build --no-test recipe ^
+    || exit /b !ERRORLEVEL!
+
+for /f %%s in ( '"%PYTHON%" setup.py --version' ) do (
+    set "GEO-VERSION=%%s"
+)
+
+echo GEO-VERSION = %GEO-VERSION%
+
+
+
 cd ..\orange3
 
 if "%CONDA_SPEC_FILE%" == "" (
@@ -132,6 +149,7 @@ if "%CONDA_SPEC_FILE%" == "" (
                  Orange3=%VERSION% ^
                  orange-canvas-core=%CANVAS-VERSION% ^
                  orange-widget-base=%WIDGET-VERSION% ^
+                 orange3-geo=%GEO-VERSION% ^
                  blas=*=openblas ^
         || exit /b !ERRORLEVEL!
 
