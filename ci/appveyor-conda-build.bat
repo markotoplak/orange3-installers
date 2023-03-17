@@ -40,6 +40,8 @@ trubar translate -s orange3-geo-orig/orangecontrib/geo -d orange3-geo/orangecont
 
 cd orange3
 
+copy ..\specs\meta.yaml conda-recipe\meta.yaml
+
 "%CONDA%" config --append channels conda-forge  || exit /b !ERRORLEVEL!
 
 if not "%CONDA_USE_ONLY_TAR_BZ2%" == "" (
