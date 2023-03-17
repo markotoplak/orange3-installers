@@ -5,7 +5,7 @@
 {% set version = data['version'] %}
 
 source:
-  git_url: ../
+  path: ../
 
 package:
   name: {{ name|lower }}
