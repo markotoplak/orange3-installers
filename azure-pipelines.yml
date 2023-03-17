@@ -23,6 +23,8 @@ jobs:
           git clone -q https://github.com/biolab/orange-widget-base.git
           git clone -q https://github.com/biolab/orange-translations.git
 
+          git clone -q https://github.com/biolab/orange3-geo.git
+
           set -e
           git clone -q $REPO
           cd orange3
@@ -54,13 +56,17 @@ jobs:
           trubar translate -s orange-canvas-core-orig/orangecanvas -d orange-canvas-core/orangecanvas --static orange-translations/si/orange-canvas-static orange-translations/si/orange-canvas-core.yaml
           trubar translate -s orange-widget-base-orig/orangewidget -d orange-widget-base/orangewidget orange-translations/si/orange-widget-base.yaml
           trubar translate -s orange3-orig/Orange -d orange3/Orange orange-translations/si/orange3.jaml
+
+          cp -r orange3-geo orange3-geo-orig
+          trubar translate -s orange3-geo-orig/orangecontrib/geo -d orange3-geo/orangecontrib/geo orange-translations/si/orange3-geo.jaml
+
         displayName: 'Apply translations (trubar)'
 
       - bash: |
           set -e
           cd orange3
           if [[ $BUILD_LOCAL ]]; then
-              PIP_ARGS=( --pip-arg={-r,../specs/macos/requirements.txt,./,../orange-canvas-core,../orange-widget-base} );
+              PIP_ARGS=( --pip-arg={-r,../specs/macos/requirements.txt,./,../orange-canvas-core,../orange-widget-base,../orange3-geo} );
           else
               PIP_ARGS=( --pip-arg={-r,../specs/macos/requirements.txt,Orange3==$BUILD_COMMIT} );
           fi
