@@ -33,6 +33,7 @@ xcopy orange-widget-base orange-widget-base-orig\ /s
 trubar translate -s orange-canvas-core-orig/orangecanvas -d orange-canvas-core/orangecanvas --static orange-translations/si/orange-canvas-static orange-translations/si/orange-canvas-core.yaml
 trubar translate -s orange-widget-base-orig/orangewidget -d orange-widget-base/orangewidget orange-translations/si/orange-widget-base.yaml
 trubar translate -s orange3-orig/Orange -d orange3/Orange orange-translations/si/orange3.jaml
+trubar --conf orange-translations/si/test_config.yaml translate -p test_ -s orange3-orig/Orange -d orange3/Orange orange-translations/si/orange3-tests.jaml
 
 xcopy orange3-geo orange3-geo-orig\ /s
 trubar translate -s orange3-geo-orig/orangecontrib/geo -d orange3-geo/orangecontrib/geo orange-translations/si/orange3-geo.jaml
