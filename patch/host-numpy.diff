@@ -1,0 +1,13 @@
+diff --git a/conda-recipe/meta.yaml b/conda-recipe/meta.yaml
+index 3f60bad84..fc03e39c0 100644
+--- a/conda-recipe/meta.yaml
++++ b/conda-recipe/meta.yaml
+@@ -29,7 +29,7 @@ requirements:
+     - python
+     - pip
+     - cython
+-    - numpy
++    - numpy >=1.22
+     - recommonmark
+     - setuptools
+     - sphinx >=4.2.0
