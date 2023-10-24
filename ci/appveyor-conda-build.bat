@@ -79,6 +79,7 @@ if "%CONDA_SPEC_FILE%" == "" (
                  pyqt=5.15.* ^
                  pyqtwebengine=5.15.* ^
                  Orange3=%VERSION% ^
+                 dask ^
                  blas=*=openblas ^
         || exit /b !ERRORLEVEL!
 
