@@ -37,13 +37,34 @@ if not "%BUILD_LOCAL%" == "" (
     python -m pip wheel -w ../wheels --no-deps -vv . ^
         || exit /b !ERRORLEVEL!
 
+    python -m pip wheel -w ../wheels --no-deps -vv https://github.com/Quasars/orange-spectroscopy/archive/refs/heads/dask.zip ^
+	    || exit /b !ERRORLEVEL!
+
+    cd ..
+    cd orange3-survival-analysis
+
+    python -m pip wheel -w ../wheels --no-deps -vv . ^
+        || exit /b !ERRORLEVEL!
+    for /f %%s in ( 'python setup.py --version' ) do (
+        set "SURVIVAL_VERSION=%%s"
+    echo SURVIVAL_VERSION = "%SURVIVAL_VERSION%"
+    rem # hardcode survival version because it is not properly detected
+    set "SURVIVAL_VERSION=0.5.2.dev16+gccb7070"
+
+    ) || exit /b !ERRORLEVEL!
+
+    cd ..
+    cd orange3
+
     for /f %%s in ( 'python setup.py --version' ) do (
         set "VERSION=%%s"
     ) || exit /b !ERRORLEVEL!
 ) else (
     set "VERSION=%BUILD_COMMIT%"
 )
-python -m pip wheel -w ../wheels -f ../wheels orange3==%VERSION% -r "%ENVSPEC%"
+python -m pip wheel -w ../wheels -f ../wheels orange3==%VERSION% ^
+    orange-spectroscopy==0.6.11+dask ^
+    orange3-survival-analysis==%SURVIVAL_VERSION% -r "%ENVSPEC%"
 
 echo VERSION  = "%VERSION%"
 
@@ -54,7 +75,9 @@ bash -c "pacman -S --noconfirm unzip"  || exit /b %ERRORLEVEL%
 bash -c "which unzip"                  || exit /b %ERRORLEVEL%
 bash -e ../scripts/windows/build-win-installer.sh ^
      --find-links=../wheels ^
-     --pip-arg=orange3==%VERSION%  ^
+     --pip-arg=orange3==%VERSION% ^
+     --pip-arg=orange-spectroscopy==0.6.11+dask ^
+     --pip-arg=orange3-survival-analysis==%SURVIVAL_VERSION% ^
      %SPECARGS%        || exit /b %ERRORLEVEL%
 
 for %%s in ( dist/Orange3-*-Python*-*.exe ) do (

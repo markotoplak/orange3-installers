@@ -46,6 +46,8 @@ cache:
   - '.cache -> appveyor.yml'
 
 build_script:
+  - git clone https://github.com/biolab/orange3-survival-analysis.git -b dask
+
   - git clone -q %REPO%
   - cd orange3
   - git fetch origin %BUILD_BRANCH%
