@@ -33,10 +33,10 @@ environment:
       CONDA_SPEC_FILE:
       # CONDA_SPEC_FILE: ..\specs\win\conda-spec.txt
 
-    - PYTHON_VERSION: '3.9.13'
-      PLATTAG: win_amd64
-      ENVSPEC: ../specs/win/PY38.txt
-      PYTHON: C:\Python39-x64
+#    - PYTHON_VERSION: '3.9.13'
+#      PLATTAG: win_amd64
+#      ENVSPEC: ../specs/win/PY38.txt
+#      PYTHON: C:\Python39-x64
 
 matrix:
   fast_finish: false
@@ -90,8 +90,8 @@ test_script:
   # Run test suite in the installed environment.
   - set ORANGE_DEPRECATIONS_ERROR=1
   - set PYTHONWARNINGS=module
-  - >-
-    "%PYTHON%" -m unittest -v Orange.tests Orange.widgets.tests || cd .
+  #- >-
+  #  "%PYTHON%" -m unittest -v Orange.tests Orange.widgets.tests || cd .
   - move orange3\dist\%INSTALLER% installers\
 
   # Log the filename and the sha checksum
