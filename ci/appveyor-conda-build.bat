@@ -72,7 +72,7 @@ if "%CONDA_SPEC_FILE%" == "" (
                  python=%PYTHON_VERSION% ^
                  numpy=1.24.* ^
                  scipy=1.10.* ^
-                 scikit-learn=1.1.* ^
+                 scikit-learn=1.3.* ^
                  pandas=1.5.* ^
                  pyqtgraph=0.13.* ^
                  bottleneck=1.3.* ^
