@@ -21,7 +21,7 @@ pyqtwebengine~=5.15.4
 docutils~=0.18.0
 pip~=23.0.0
 pyqtgraph~=0.13.1
-xlrd~=2.0
+xlrd~=1.2.0
 xlsxwriter
 serverfiles
 opentsne~=0.7.1
