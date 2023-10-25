@@ -47,6 +47,7 @@ cache:
 
 build_script:
   - git clone https://github.com/biolab/orange3-survival-analysis.git -b dask
+  - git clone https://github.com/biolab/orange3-single-cell.git -b master
 
   - git clone -q %REPO%
   - cd orange3

@@ -53,6 +53,18 @@ if not "%BUILD_LOCAL%" == "" (
     set "SURVIVAL_VERSION=0.5.2.dev16+gccb7070"
 
     cd ..
+    cd orange3-single-cell
+
+    python -m pip wheel -w ../wheels --no-deps -vv . ^
+        || exit /b !ERRORLEVEL!
+    for /f %%s in ( 'python setup.py --version' ) do (
+        set "SC_VERSION=%%s"
+    ) || exit /b !ERRORLEVEL!
+    echo SC_VERSION = "%SC_VERSION%"
+    rem # hardcode survival version because it is not properly detected
+    set "SC_VERSION=1.5.1.dev26+g40341cd"
+
+    cd ..
     cd orange3
 
     for /f %%s in ( 'python setup.py --version' ) do (
@@ -63,7 +75,9 @@ if not "%BUILD_LOCAL%" == "" (
 )
 python -m pip wheel -w ../wheels -f ../wheels orange3==%VERSION% ^
     orange-spectroscopy==0.6.11+dask ^
-    orange3-survival-analysis==%SURVIVAL_VERSION% -r "%ENVSPEC%"
+    orange3-survival-analysis==%SURVIVAL_VERSION% ^
+    orange3-singlecell==%SC_VERSION% ^
+    -r "%ENVSPEC%"
 
 echo VERSION  = "%VERSION%"
 
@@ -77,6 +91,7 @@ bash -e ../scripts/windows/build-win-installer.sh ^
      --pip-arg=orange3==%VERSION% ^
      --pip-arg=orange-spectroscopy==0.6.11+dask ^
      --pip-arg=orange3-survival-analysis==%SURVIVAL_VERSION% ^
+     --pip-arg=orange3-singlecell==%SC_VERSION% ^
      %SPECARGS%        || exit /b %ERRORLEVEL%
 
 for %%s in ( dist/Orange3-*-Python*-*.exe ) do (
