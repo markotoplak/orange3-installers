@@ -50,7 +50,7 @@ if not "%BUILD_LOCAL%" == "" (
     ) || exit /b !ERRORLEVEL!
     echo SURVIVAL_VERSION = "%SURVIVAL_VERSION%"
     rem # hardcode survival version because it is not properly detected
-    set "SURVIVAL_VERSION=0.5.2.dev16+gccb7070"
+    set "SURVIVAL_VERSION=0.5.2.dev18+g7996235"
 
     cd ..
     cd orange3-single-cell
